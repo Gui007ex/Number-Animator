@@ -2,16 +2,13 @@ from Arqs.Canva import Canva
 from Arqs.Animation import Animation
 from os import system as sys
 
-tutorial = open(file='Arqs/Tutorial.txt',mode='r',encoding='utf-8').read()
 comands = open(file='Arqs/Comands.txt',mode='r',encoding='utf-8').read()
 moves = open(file='Arqs/Move_Options.txt',mode='r',encoding='utf-8').read()
+configs = open(file='Arqs/Config.txt',mode='r',encoding='utf-8').read()
 
 move_comands = ['W','S','D','A','1','2','3','4']
 animations = []
 debug_frame = 0
-
-# sys('cls')
-# input(tutorial)
 
 while True: 
     sys('cls')
@@ -60,9 +57,53 @@ while True:
                         select = int(input("\nSelecionar animação para rodar: "))
                         if 0 < select <= len(animations):
                             choosing = False
+                            select -= 1
                     except:
                         pass
-                animations[select-1].Play()
+                animations[select].Play()
                 input('\nEnter para voltar')
             else:
                 input('\nSem animações :( ')
+        case 'C':
+            if len(animations):
+                choosing = True
+                while choosing:
+                    sys('cls')
+                    for i, animation in enumerate(animations):
+                        print(f'{i+1} - {animation.Name()}')
+                    try:
+                        select = int(input("\nSelecionar animação para configurar: "))
+                        if 0 < select <= len(animations):
+                            choosing = False
+                            select -= 1
+                    except:
+                        pass
+                choosing = True
+                while choosing:
+                    sys('cls')
+                    print(f'Selecionado: {animations[select].Name()}')
+                    option = input(configs).upper()
+                    match option:
+                        case 'V':
+                            sys('cls')
+                            print(f'Velocidade atual: {1/animations[select].Speed()} fps\n')
+                            new_speed = input('Selecione uma das velocidades:\n\n(1) fps\n(2) fps\n(4) fps\n(5) fps\n(8) fps\n(10) fps\n\n-----> ')
+                            if new_speed in ['1','2','4','5','8','10']:
+                                new_speed = int(new_speed)
+                                animations[select].SetSpeed(1/new_speed)
+                                input('\nVelocidade alterada ')
+                        case 'N':
+                            new_name = input('\nSelecione um novo nome: ')
+                            animations[select].SetName(new_name)
+                        case 'X':
+                            password = animations[select].Name()
+                            try_pass = input('\nConfirme o nome da animação para excluir: ')
+                            if password == try_pass:
+                                animations.pop(select)
+                                input('\nAnimação excluída ')
+                                choosing = False
+                        case 'E':
+                            choosing = False
+            else:
+                input('\nSem animações :( ')
+
