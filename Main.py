@@ -1,3 +1,4 @@
+import json
 from Arqs.Canva import Canva
 from Arqs.Animation import Animation
 from os import system as sys
