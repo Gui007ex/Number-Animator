@@ -1,7 +1,0 @@
-
-(V) alterar velocidade
-(N) alterar o nome
-(X) excluir
-(E) voltar
-
------>

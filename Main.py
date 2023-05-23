@@ -2,9 +2,29 @@ from Arqs.Canva import Canva
 from Arqs.Animation import Animation
 from os import system as sys
 
-comands = open(file='Arqs/Comands.txt',mode='r',encoding='utf-8').read()
-moves = open(file='Arqs/Move_Options.txt',mode='r',encoding='utf-8').read()
-configs = open(file='Arqs/Config.txt',mode='r',encoding='utf-8').read()
+comands = '''1234 Animator - Versão 1.1
+
+
+(G) criar animação
+(A) selecionar animação
+(C) configurações de animação
+
+
+-----> '''
+moves = '''(W) mover pra cima
+(A) mover pra esquerda 
+(S) mover pra baixo
+(D) mover pra direita
+(Número) trocar posição com esse número
+
+-----> '''
+configs = '''
+(V) alterar velocidade
+(N) alterar o nome
+(X) excluir
+(E) voltar
+
+-----> '''
 
 move_comands = ['W','S','D','A','1','2','3','4']
 animations = []

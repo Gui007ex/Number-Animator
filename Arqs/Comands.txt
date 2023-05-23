@@ -1,9 +1,0 @@
-1234 Animator - Versão 1.1
-
-
-(G) criar animação
-(A) selecionar animação
-(C) configurações de animação
-
-
------> 
