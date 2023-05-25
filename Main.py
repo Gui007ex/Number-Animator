@@ -9,7 +9,8 @@ comands = '''1234 Animator - Versão 1.1
 (G) criar animação
 (A) selecionar animação
 (C) configurações de animação
-
+(S) salvar
+(E) salvar e sair
 
 -----> '''
 moves = '''(W) mover pra cima
@@ -27,18 +28,25 @@ configs = '''
 
 -----> '''
 
-move_comands = ['W','S','D','A','1','2','3','4']
+file = open(file="Arqs/Cache.JSON", mode='r')
+data = json.load(file)
 animations = []
+for key in data:
+    animations.append(Animation(**data[key]))
+file.close()
+
+move_comands = ['W','S','D','A','1','2','3','4']
 debug_frame = 0
 
-while True: 
+animator_running = True
+while animator_running: 
     sys('cls')
     entry = input(comands).upper()
 
     match entry:
         case 'G':
             preview = Canva()
-            building, frame, end_warn = True, 1, ''
+            building, frame, end_warn = True, 1, '\n'
             frames = []
             while building:
                 sys('cls')
@@ -63,7 +71,8 @@ while True:
                 elif number == 'F' and frame > 2:
                     building = False
                     anim_name = input('\nNome da animação: ')
-                    new_animation = Animation(frames, anim_name)
+                    new_animation = Animation(frames, anim_name, 0.5, None)
+                    new_animation.CreateId(data)
                     animations.append(new_animation)
                 if frame > 2:
                     end_warn = '\n(F) para finalizar'
@@ -127,4 +136,18 @@ while True:
                             choosing = False
             else:
                 input('\nSem animações :( ')
-
+        case 'S':
+            file = open(file="Arqs/Cache.JSON", mode='w')
+            data = {}
+            for animation in animations:
+                data[animation.Id()] = animation.__dict__
+            json.dump(data, file, indent=4)
+            file.close()
+        case 'E':
+            file = open(file="Arqs/Cache.JSON", mode='w')
+            data = {}
+            for animation in animations:
+                data[animation.Id()] = animation.__dict__
+            json.dump(data, file, indent=4)
+            file.close()
+            animator_running = False
